@@ -25,22 +25,25 @@ int main() {
 
   // any message respond
   bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
-    std::cout << prefix << message->from->username << ": \"" << message->text.c_str() << "\"\n";
+    std::cout << prefix << message->from->username << ": \""
+              << message->text.c_str() << "\"\n";
     // except "/start" command
     if (StringTools::startsWith(message->text, "/start")) {
       return;
     }
-    bot.getApi().sendMessage(message->chat->id, "You said \"" + message->text + "\"");
+    bot.getApi().sendMessage(message->chat->id,
+                             "You said \"" + message->text + "\"");
   });
 
   try {
-    std::cout << prefix << '@' << bot.getApi().getMe()->username.c_str() << " started\n";
+    std::cout << prefix << '@' << bot.getApi().getMe()->username.c_str()
+              << " started\n";
     TgBot::TgLongPoll longPoll(bot);
     while (true) {
       longPoll.start();
       // std::cout << prefix << "long poll started\n";
     }
-  } catch (TgBot::TgException& e) {
+  } catch (TgBot::TgException &e) {
     std::cerr << prefix << "ERROR: " << e.what() << '\n';
   }
   return 0;
