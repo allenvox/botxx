@@ -12,5 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: apt-get install g++ make binutils cmake libboost-system-dev libssl-dev zlib1g-dev libcurl4-openssl-dev
       - name: Build application
         run: cmake --preset release & cmake --build --preset release
